@@ -1,0 +1,50 @@
+diff --git a/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm b/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
+index 0af2bd4..d6fc5b8 100644
+--- a/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
++++ b/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
+@@ -486,6 +486,21 @@ static CALayerContentsGravity getCALayerContentsGravity(VkSwapchainPresentScalin
+ 	auto* mtlLayer = getCAMetalLayer();
+ 	if ( !mtlLayer || getIsSurfaceLost() ) { return; }
+ 
++	// Because of a regression in Metal, the most recent one or two presentations may not
++	// complete and call back. Changing the CAMetalLayer drawableSize will force any incomplete
++	// presentations on the oldSwapchain to complete and call back, but if the drawableSize
++	// is not changing from the previous, we force those completions first. Forcing completion
++	// can block, so it stays on the calling thread, ahead of the main-thread hop below.
++	auto* oldSwapchain = (MVKSwapchain*)pCreateInfo->oldSwapchain;
++	if (oldSwapchain && mvkVkExtent2DsAreEqual(pCreateInfo->imageExtent, _surface->getExtent())) {
++		oldSwapchain->forceUnpresentedImageCompletion();
++	}
++
++	// A UIKit-hosted layer's properties belong to the main thread: writing them from a
++	// rendering thread is flagged by the main-thread checker, and where CoreAnimation
++	// proxies the layer across XPC the write can be fatal. The swapchain cannot be used
++	// until its layer is configured, so the writes hop to the main thread synchronously.
++	mvkDispatchToMainAndWait(^{
+ 	auto minMagFilter = getMVKConfig().swapchainMinMagFilterUseNearest ? kCAFilterNearest : kCAFilterLinear;
+ 	mtlLayer.drawableSize = mvkCGSizeFromVkExtent2D(_imageExtent);
+ 	mtlLayer.device = getMTLDevice();
+@@ -501,15 +516,6 @@ static CALayerContentsGravity getCALayerContentsGravity(VkSwapchainPresentScalin
+ 																			  VK_IMAGE_USAGE_STORAGE_BIT)) &&
+ 								!mvkAreAllFlagsEnabled(pCreateInfo->flags, VK_SWAPCHAIN_CREATE_MUTABLE_FORMAT_BIT_KHR);
+ 
+-	// Because of a regression in Metal, the most recent one or two presentations may not
+-	// complete and call back. Changing the CAMetalLayer drawableSize will force any incomplete
+-	// presentations on the oldSwapchain to complete and call back, but if the drawableSize
+-	// is not changing from the previous, we force those completions first.
+-	auto* oldSwapchain = (MVKSwapchain*)pCreateInfo->oldSwapchain;
+-	if (oldSwapchain && mvkVkExtent2DsAreEqual(pCreateInfo->imageExtent, _surface->getExtent())) {
+-		oldSwapchain->forceUnpresentedImageCompletion();
+-	}
+-
+ 	if (pCreateInfo->compositeAlpha != VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR) {
+ 		mtlLayer.opaque = pCreateInfo->compositeAlpha == VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+ 	}
+@@ -567,6 +573,7 @@ static CALayerContentsGravity getCALayerContentsGravity(VkSwapchainPresentScalin
+ 			setConfigurationResult(reportError(VK_ERROR_FORMAT_NOT_SUPPORTED, "vkCreateSwapchainKHR(): Metal does not support VkColorSpaceKHR value %d.", pCreateInfo->imageColorSpace));
+ 			break;
+ 	}
++	});
+ 
+ 	// TODO: set additional CAMetalLayer properties before extracting drawables:
+ 	//	- presentsWithTransaction

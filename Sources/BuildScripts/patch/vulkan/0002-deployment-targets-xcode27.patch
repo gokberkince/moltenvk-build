@@ -1,0 +1,170 @@
+diff --git a/Demos/Cube/Cube.xcodeproj/project.pbxproj b/Demos/Cube/Cube.xcodeproj/project.pbxproj
+index 04948f6..bc211ee 100644
+--- a/Demos/Cube/Cube.xcodeproj/project.pbxproj
++++ b/Demos/Cube/Cube.xcodeproj/project.pbxproj
+@@ -483,7 +483,7 @@
+ 				MARKETING_VERSION = 1;
+ 				PRODUCT_NAME = Cube;
+ 				SDKROOT = appletvos;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 			};
+ 			name = Debug;
+ 		};
+@@ -506,7 +506,7 @@
+ 				MARKETING_VERSION = 1;
+ 				PRODUCT_NAME = Cube;
+ 				SDKROOT = appletvos;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 			};
+ 			name = Release;
+ 		};
+@@ -530,7 +530,7 @@
+ 					"@executable_path/../Frameworks",
+ 					"@executable_path/../Frameworks/MoltenVK.framework",
+ 				);
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				PRODUCT_NAME = Cube;
+ 				PROVISIONING_PROFILE_SPECIFIER = "";
+ 				SDKROOT = macosx;
+@@ -557,7 +557,7 @@
+ 					"@executable_path/../Frameworks",
+ 					"@executable_path/../Frameworks/MoltenVK.framework",
+ 				);
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				PRODUCT_NAME = Cube;
+ 				PROVISIONING_PROFILE_SPECIFIER = "";
+ 				SDKROOT = macosx;
+@@ -579,7 +579,7 @@
+ 					MVK_SAMP_CUBE,
+ 				);
+ 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 15.0;
+ 				LD_RUNPATH_SEARCH_PATHS = (
+ 					"@executable_path/Frameworks",
+@@ -609,7 +609,7 @@
+ 					MVK_SAMP_CUBE,
+ 				);
+ 				INFOPLIST_FILE = "$(SRCROOT)/iOS/Info.plist";
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 15.0;
+ 				LD_RUNPATH_SEARCH_PATHS = (
+ 					"@executable_path/Frameworks",
+diff --git a/ExternalDependencies.xcodeproj/project.pbxproj b/ExternalDependencies.xcodeproj/project.pbxproj
+index 8d50b21..2676031 100644
+--- a/ExternalDependencies.xcodeproj/project.pbxproj
++++ b/ExternalDependencies.xcodeproj/project.pbxproj
+@@ -5941,11 +5941,11 @@
+ 				GCC_WARN_UNUSED_FUNCTION = YES;
+ 				GCC_WARN_UNUSED_PARAMETER = YES;
+ 				GCC_WARN_UNUSED_VARIABLE = NO;
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				MACH_O_TYPE = staticlib;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 			};
+ 			name = Debug;
+ 		};
+@@ -5991,11 +5991,11 @@
+ 				GCC_WARN_UNUSED_FUNCTION = YES;
+ 				GCC_WARN_UNUSED_PARAMETER = YES;
+ 				GCC_WARN_UNUSED_VARIABLE = NO;
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				MACH_O_TYPE = staticlib;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 				VALIDATE_PRODUCT = YES;
+ 			};
+ 			name = Release;
+diff --git a/MoltenVK/MoltenVK.xcodeproj/project.pbxproj b/MoltenVK/MoltenVK.xcodeproj/project.pbxproj
+index 2cfceaa..17f7709 100644
+--- a/MoltenVK/MoltenVK.xcodeproj/project.pbxproj
++++ b/MoltenVK/MoltenVK.xcodeproj/project.pbxproj
+@@ -2623,15 +2623,15 @@
+ 					"\"$(SRCROOT)/../External/cereal/include\"",
+ 					"\"${BUILT_PRODUCTS_DIR}\"",
+ 				);
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				MARKETING_VERSION = "${CURRENT_PROJECT_VERSION}";
+ 				MTL_ENABLE_DEBUG_INFO = YES;
+ 				PRELINK_LIBS = "${CONFIGURATION_BUILD_DIR}/libMoltenVKShaderConverter.a";
+ 				PRODUCT_BUNDLE_IDENTIFIER = com.moltenvk.framework;
+ 				PRODUCT_NAME = MoltenVK;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 				WARNING_CFLAGS = (
+ 					"-Wreorder",
+ 					"-Wheader-hygiene",
+@@ -2701,15 +2701,15 @@
+ 					"\"$(SRCROOT)/../External/cereal/include\"",
+ 					"\"${BUILT_PRODUCTS_DIR}\"",
+ 				);
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				MARKETING_VERSION = "${CURRENT_PROJECT_VERSION}";
+ 				MTL_ENABLE_DEBUG_INFO = NO;
+ 				PRELINK_LIBS = "${CONFIGURATION_BUILD_DIR}/libMoltenVKShaderConverter.a";
+ 				PRODUCT_BUNDLE_IDENTIFIER = com.moltenvk.framework;
+ 				PRODUCT_NAME = MoltenVK;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 				VALIDATE_PRODUCT = YES;
+ 				WARNING_CFLAGS = (
+ 					"-Wreorder",
+diff --git a/MoltenVKShaderConverter/MoltenVKShaderConverter.xcodeproj/project.pbxproj b/MoltenVKShaderConverter/MoltenVKShaderConverter.xcodeproj/project.pbxproj
+index 3b6abaa..b281edc 100644
+--- a/MoltenVKShaderConverter/MoltenVKShaderConverter.xcodeproj/project.pbxproj
++++ b/MoltenVKShaderConverter/MoltenVKShaderConverter.xcodeproj/project.pbxproj
+@@ -684,12 +684,12 @@
+ 					"\"$(SRCROOT)/SPIRV-Cross\"",
+ 					"\"$(SRCROOT)/SPIRV-Tools/include\"",
+ 				);
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				MACH_O_TYPE = staticlib;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				PRODUCT_NAME = MoltenVKShaderConverter;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 				WARNING_CFLAGS = (
+ 					"-Wreorder",
+ 					"-Wheader-hygiene",
+@@ -748,12 +748,12 @@
+ 					"\"$(SRCROOT)/SPIRV-Cross\"",
+ 					"\"$(SRCROOT)/SPIRV-Tools/include\"",
+ 				);
+-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
++				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+ 				MACH_O_TYPE = staticlib;
+-				MACOSX_DEPLOYMENT_TARGET = 11.0;
++				MACOSX_DEPLOYMENT_TARGET = 12.0;
+ 				PRODUCT_NAME = MoltenVKShaderConverter;
+ 				SKIP_INSTALL = YES;
+-				TVOS_DEPLOYMENT_TARGET = 14.5;
++				TVOS_DEPLOYMENT_TARGET = 15.0;
+ 				VALIDATE_PRODUCT = YES;
+ 				WARNING_CFLAGS = (
+ 					"-Wreorder",
