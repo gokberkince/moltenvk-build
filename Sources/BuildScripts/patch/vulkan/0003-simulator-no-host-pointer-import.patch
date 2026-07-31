@@ -1,0 +1,21 @@
+diff --git a/MoltenVK/MoltenVK/GPUObjects/MVKDevice.mm b/MoltenVK/MoltenVK/GPUObjects/MVKDevice.mm
+index 125c034..2257013 100644
+--- a/MoltenVK/MoltenVK/GPUObjects/MVKDevice.mm
++++ b/MoltenVK/MoltenVK/GPUObjects/MVKDevice.mm
+@@ -3526,6 +3526,16 @@ static uint32_t mvkGetEntryProperty(io_registry_entry_t entry, CFStringRef prope
+ 		pWritableExtns->vk_IMG_format_pvrtc.enabled = false;
+ 	}
+
++#if MVK_OS_SIMULATOR
++	// The Simulator's Metal driver shares MTLBuffer storage with the host GPU process
++	// through XPC shared memory, whose contract requires plain, page-aligned, page-rounded
++	// VM regions. Host-pointer imports hand arbitrary app memory to a no-copy MTLBuffer
++	// (MVKDeviceMemory::ensureMTLBuffer()), and a region that violates that contract is a
++	// fatal _xpc_api_misuse trap in _xpc_shmem_create_with_prot rather than an error.
++	// Withdraw host-pointer import on the simulator; clients fall back to staging uploads.
++	pWritableExtns->vk_EXT_external_memory_host.enabled = false;
++#endif
++
+ #if MVK_USE_METAL_PRIVATE_API
+ 	if (!getMVKConfig().useMetalPrivateAPI) {
+ #endif
