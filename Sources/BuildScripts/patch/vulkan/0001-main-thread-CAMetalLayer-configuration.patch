@@ -1,0 +1,25 @@
+diff --git a/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm b/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
+index 4c90866..69e35de 100644
+--- a/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
++++ b/MoltenVK/MoltenVK/GPUObjects/MVKSwapchain.mm
+@@ -498,6 +498,12 @@ static CALayerContentsGravity getCALayerContentsGravity(VkSwapchainPresentScalin
+ 		oldSwapchain->forceUnpresentedImageCompletion();
+ 	}
+ 
++	// A UIKit-hosted layer's properties belong to the main thread: writing them from a
++	// rendering thread is flagged by the main-thread checker, and where CoreAnimation proxies
++	// the layer across XPC the write can be fatal. The swapchain cannot be used until its layer
++	// is configured, so the writes hop to the main thread synchronously. The blocking
++	// force-completion above stays on the calling thread on purpose.
++	mvkDispatchToMainAndWait(^{
+ 	auto minMagFilter = getMVKConfig().swapchainMinMagFilterUseNearest ? kCAFilterNearest : kCAFilterLinear;
+ 	mtlLayer.drawableSize = mvkCGSizeFromVkExtent2D(_imageExtent);
+ 	mtlLayer.device = getMTLDevice();
+@@ -570,6 +576,7 @@ static CALayerContentsGravity getCALayerContentsGravity(VkSwapchainPresentScalin
+ 			setConfigurationResult(reportError(VK_ERROR_FORMAT_NOT_SUPPORTED, "vkCreateSwapchainKHR(): Metal does not support VkColorSpaceKHR value %d.", pCreateInfo->imageColorSpace));
+ 			break;
+ 	}
++	});
+ 
+ 	// TODO: set additional CAMetalLayer properties before extracting drawables:
+ 	//	- presentsWithTransaction
